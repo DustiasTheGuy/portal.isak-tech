@@ -1,0 +1,12 @@
+footer {
+  padding: 2em;
+  height: 2.4em;
+}
+footer p {
+  color: #525252;
+  font-size: 17px;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+/*# sourceMappingURL=footer.css.map */

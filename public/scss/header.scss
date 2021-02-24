@@ -1,0 +1,22 @@
+nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 2em 5em 2em 5em;
+    
+    div {    
+        a {
+            text-decoration: none;
+            color: rgb(54, 54, 54);
+            display: inline-block;
+            font-size: 17px;
+            text-transform: uppercase;
+            &:not(:last-of-type) {
+                margin-right: 10px;
+            }
+        }
+    }
+}

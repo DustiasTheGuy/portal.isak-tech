@@ -1,0 +1,21 @@
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 2em 5em 2em 5em;
+}
+nav div a {
+  text-decoration: none;
+  color: #363636;
+  display: inline-block;
+  font-size: 17px;
+  text-transform: uppercase;
+}
+nav div a:not(:last-of-type) {
+  margin-right: 10px;
+}
+
+/*# sourceMappingURL=header.css.map */
