@@ -1,1 +1,7 @@
 /public/js/node_modules
+/public/scss
+/public/css/header.css.map
+/public/css/footer.css.map
+/public/css/styles.css.map
+/public/css/grid.css.map
+/public/js/dist
