@@ -1,12 +1,12 @@
 package routes
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"fmt"
+	"portal/models"
+	"strconv"
 
-type Page struct {
-	URL         string `json:"url"`
-	Description string `json:"description"`
-	ImageURL    string `json:"imgUrl"`
-}
+	"github.com/gofiber/fiber/v2"
+)
 
 type HTTPResponse struct {
 	Message string      `json:"message"`
@@ -22,53 +22,71 @@ func IndexHandler(c *fiber.Ctx) error {
 }
 
 func IndexJSONHandler(c *fiber.Ctx) error {
-	return c.JSON(HTTPResponse{Message: "Yeah", Success: true,
-		Data: []Page{
-			{
-				"https://isak-tech.tk",
-				"Personal site for promoting my services",
-				"/public/images/isaktech.png",
-			},
-			{
-				"https://paste.isak-tech.tk",
-				"Paste whatever you'd like and grab it later",
-				"/public/images/paste.png",
-			},
-			{
-				"https://mail.isak-tech.tk",
-				"my personal mail server",
-				"/public/images/email.png",
-			},
-			{
-				"https://www.shapedivider.app/",
-				"Create cool and awesome backgrounds",
-				"/public/images/bgcreator.png",
-			},
-			{
-				"https://www.cssmatic.com/box-shadow",
-				"Experiment with the box shadow property",
-				"/public/images/boxshadow.png",
-			},
-			{
-				"https://tailwindcss.com/docs",
-				"New interesting UI library",
-				"/public/images/tw.png",
-			},
-			{
-				"https://michalsnik.github.io/aos/",
-				"An awesome animation library",
-				"/public/images/aos.png",
-			},
-			{
-				"https://www.iloveimg.com/",
-				"A solid image compressor",
-				"/public/images/imgcompress.png",
-			},
-			{
-				"https://autoprefixer.github.io/",
-				"Vendor Prefixer CSS/SCSS",
-				"/public/images/vendorprefix.png",
-			},
-		},
+	pages, err := models.GetAllPages()
+
+	if err != nil {
+		return c.JSON(HTTPResponse{
+			Message: "Internal Server Error",
+			Success: false,
+			Data:    nil,
+		})
+	}
+
+	return c.JSON(HTTPResponse{Message: "Yeah", Success: true, Data: pages})
+}
+
+func NewPageHandler(c *fiber.Ctx) error {
+	var p models.Page
+
+	if err := c.BodyParser(&p); err != nil {
+		fmt.Println(err)
+
+		return c.JSON(HTTPResponse{
+			Message: "Unable to parse body",
+			Success: false,
+			Data:    nil,
+		})
+	}
+
+	if err := p.SaveNewPage(); err != nil {
+		fmt.Println(err)
+
+		return c.JSON(HTTPResponse{
+			Message: "Unable to save post",
+			Success: false,
+			Data:    nil,
+		})
+	}
+
+	return c.JSON(HTTPResponse{
+		Message: "Saved New Post",
+		Success: true,
+		Data:    nil,
+	})
+}
+
+func RemovePageHandler(c *fiber.Ctx) error {
+	pageID, err := strconv.ParseInt(c.Params("pageID"), 10, 64)
+
+	if err != nil {
+		return c.JSON(HTTPResponse{
+			Message: "Invalid Parameter Recieved",
+			Success: false,
+			Data:    nil,
+		})
+	}
+
+	if err := models.RemovePage(pageID); err != nil {
+		return c.JSON(HTTPResponse{
+			Message: "Page may have been moved or deletedf",
+			Success: false,
+			Data:    nil,
+		})
+	}
+
+	return c.JSON(HTTPResponse{
+		Message: "Removed Post",
+		Success: true,
+		Data:    nil,
 	})
 }

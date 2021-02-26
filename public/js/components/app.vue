@@ -14,11 +14,12 @@ export default {
     name: "AppComponent",
     data() {
         return {
-            sites: []
+            sites: [],
+            production: true
         }
     },
     created() {
-        fetch('https://portal.isak-tech.tk/data')
+        fetch(this.production ? 'https://portal.isak-tech.tk/data' : 'http://localhost:8083/data')
         .then(response => response.json())
         .then(data => this.sites = data.data);
     },

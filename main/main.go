@@ -20,6 +20,7 @@ func main() {
 	app.Get("/", routes.IndexHandler)
 	app.Get("/about", routes.AboutHandler)
 	app.Get("/data", routes.IndexJSONHandler)
-
+	app.Post("/new-page", routes.NewPageHandler)
+	app.Get("/delete-page/:pageID", routes.RemovePageHandler)
 	log.Fatal(app.Listen(":8083"))
 }
