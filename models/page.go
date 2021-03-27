@@ -7,9 +7,9 @@ import (
 
 type Page struct {
 	ID          uint      `json:id`
-	URL         string    `json:"url"`
+	Href        string    `json:"href"`
 	Description string    `json:"description"`
-	ImageURL    string    `json:"imgUrl"`
+	Thumbnail   string    `json:"thumbnail"`
 	Created     time.Time `json:"created"`
 }
 
@@ -21,8 +21,8 @@ func (p *Page) SaveNewPage() error {
 	})
 	defer db.Close()
 
-	_, err := db.Exec("INSERT INTO pages (url, description, imageurl) VALUES (?, ?, ?)",
-		p.URL, p.Description, p.ImageURL)
+	_, err := db.Exec("INSERT INTO pages (href, description, thumbnail) VALUES (?, ?, ?)",
+		p.Href, p.Description, p.Thumbnail)
 
 	return err
 }
@@ -61,9 +61,9 @@ func GetAllPages() ([]Page, error) {
 
 		if err := rows.Scan(
 			&page.ID,
-			&page.URL,
+			&page.Href,
 			&page.Description,
-			&page.ImageURL,
+			&page.Thumbnail,
 			&page.Created); err != nil {
 			return nil, err
 		}

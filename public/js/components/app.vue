@@ -4,7 +4,7 @@
         v-for="(s, index) of sites" 
         v-bind:key="index" 
         :src="s.imgUrl" 
-        :title="s.description"
+        :title="s.thumbnail"
         @click="navigate(s.url)">
     </div>
 </template>
@@ -19,9 +19,11 @@ export default {
         }
     },
     created() {
-        fetch(this.production ? 'https://portal.isak-tech.tk/data' : 'http://localhost:8083/data')
+        fetch(this.production ? 'https://portal.isakgranqvist.com/data' : 'http://localhost:8083/data')
         .then(response => response.json())
         .then(data => this.sites = data.data);
+
+        setTimeout(() => console.log(this.sites), 3000)
     },
     methods: {
         navigate: (url) => window.location.href = url

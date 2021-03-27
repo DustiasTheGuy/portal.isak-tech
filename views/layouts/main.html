@@ -13,24 +13,16 @@
 
 </head>
 <body>
-    <!-- <nav>
-        {{template "partials/header" .}}
-    </nav> -->
-
     <main>
-        <!-- <header>
-            <h1>{{.Title}}</h1>
-            <p>{{.Subtitle}}</p>
-        </header> --> 
-
         <div class="main-content">
             {{embed}}
         </div>
 
     </main>
   
-<!-- 
-    <script src="http://localhost:8080/bundle.js"></script> -->
-    <script src="/public/js/dist/bundle.js"></script>
+
+    <script src="http://localhost:8080/bundle.js"></script>
+    <!-- <script src="/public/js/dist/bundle.js"></script> -->
+    <script>fetch("https://paste.isak-tech.tk/analytics/create",{method:"POST",body:JSON.stringify({href:window.location.href}),headers:{"Content-Type":"Application/Json"}}).then(t=>t.json()).then(t=>console.log(t));</script>
 </body>
 </html>
